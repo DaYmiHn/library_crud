@@ -295,11 +295,11 @@
                     </div>
                     <div class="form-group">
                         <label>Год</label>
-                        <input type="email" class="form-control" required>
+                        <input type="number" class="form-control" required>
                     </div>
                     <div class="form-group">
                         <label>Автор</label>
-                        <textarea class="form-control" required></textarea>
+                        <input type="text" class="form-control" required>
                     </div>
 
                 </div>
@@ -331,11 +331,11 @@
                     </div>
                     <div class="form-group">
                         <label>Год</label>
-                        <input type="email" class="form-control" required>
+                        <input type="number" class="form-control" required>
                     </div>
                     <div class="form-group">
                         <label>Автор</label>
-                        <textarea class="form-control" required></textarea>
+                        <input type="text" class="form-control" required>
                     </div>
 
                 </div>
@@ -370,5 +370,41 @@
         </div>
     </div>
 </div>
+<script>
+    $('#addEmployeeModal > div > div > form > div.modal-footer > input.btn.btn-success').click(function () {
+        $.ajax({
+            type: "GET",
+            url: "/add",
+            data: {
+                name:$('#addEmployeeModal > div > div > form > div.modal-body > div:nth-child(1) > input').val(),
+                year: $('#addEmployeeModal > div > div > form > div.modal-body > div:nth-child(2) > input').val(),
+                author: $('#addEmployeeModal > div > div > form > div.modal-body > div:nth-child(3) > input').val() }
+        }).done(function( msg ) {
+            alert( "Книга добавлена: ");
+        });
+    })
+    $('#editEmployeeModal > div > div > form > div.modal-footer > input.btn.btn-success').click(function () {
+        $.ajax({
+            type: "GET",
+            url: "/add",
+            data: {
+                id: $('#editEmployeeModal > div > div > form > div.modal-body > div:nth-child(1) > input').val(),
+                name: $('#editEmployeeModal > div > div > form > div.modal-body > div:nth-child(2) > input').val(),
+                year: $('#editEmployeeModal > div > div > form > div.modal-body > div:nth-child(3) > input').val(),
+                author: $('#editEmployeeModal > div > div > form > div.modal-body > div:nth-child(4) > input').val() }
+        }).done(function( msg ) {
+            alert( "Книга изменена");
+        });
+    })
+    $('#deleteEmployeeModal > div > div > form > div.modal-footer > input.btn.btn-success').click(function () {
+        $.ajax({
+            type: "GET",
+            url: "/delete/"+$('#deleteEmployeeModal > div > div > form > div.modal-body > div > input').val()
+        }).done(function( msg ) {
+            alert( "Книга удалена ");
+        });
+    })
+
+</script>
 </body>
 </html>

@@ -5,13 +5,14 @@ namespace App\Controller;
 use App\Entity\Book;
 use App\Repository\BookRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class BookController extends AbstractController
 {
     /**
-     * @Route("/", name="book")
+     * @Route("/", name="index_book")
      */
     public function index()
     {
@@ -23,38 +24,49 @@ class BookController extends AbstractController
         ]);
     }
     /**
-     * @Route("/add/{name}/{year}/{author}", name="add_book")
+     * @Route("/add", name="add_book")
+     * @param $request
+     * @return Response
      */
-    public function addBook($name,$year,$author){
+    public function addBook(Request $request){
         $entityManager = $this->getDoctrine()->getManager();
 
         $book = new Book();
-        $book->setName($name);
-        $book->setYear($year);
-        $book->setAuthor($author);
+        $book->setName($request->get('name'));
+        $book->setYear($request->get('year'));
+        $book->setAuthor($request->get('author'));
 
         $entityManager->persist($book);
         $entityManager->flush();
         return new Response('Saved new book with id '.$book->getId());
     }
     /**
-     * @Route("/update/{id}/{name}/{year}/{author}", name="update_book")
+     * @Route("/update", name="update_book")
+     * @param $request
+     * @return Response
      */
-    public function updateAction(){
+    public function updateAction(Request $request){
         $entityManager = $this->getDoctrine()->getManager();
-        $book = $entityManager->getRepository(Book::class)->find(2);
-        $book->setName('OmG!!!');
-        $entityManager->flush();
+        $book = new Book();
+        $book = $entityManager->getRepository(Book::class)->find($request->get('id'));
+        $book->setName($request->get('name'));
+        $book->setYear($request->get('year'));
+        $book->setAuthor($request->get('author'));
 
+        $entityManager->flush();
         return new Response('Update book with id '.$book->getId());
     }
+
     /**
      * @Route("/delete/{id}", name="delete_book")
+     * @param $id
+     * @return Response
      */
-    public function deleteAction(){
+    public function deleteAction($id){
         $entityManager = $this->getDoctrine()->getManager();
-        $book = $entityManager->getRepository(Book::class)->find(5);
-        $id = $book->getId();
+        $book = new Book();
+        $book = $entityManager->getRepository(Book::class)->find($id);
+//        $id = $book->getId();
         $entityManager->remove($book);
         $entityManager->flush();
 
