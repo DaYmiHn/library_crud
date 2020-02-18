@@ -2,9 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Book;
+use App\Repository\BookRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
 class BookController extends AbstractController
 {
@@ -13,10 +15,12 @@ class BookController extends AbstractController
      */
     public function index()
     {
-        $number = random_int(0, 100);
-
+        $book = new Book();
+        $repository = $this->getDoctrine()->getRepository(Book::class);
+        $books = $repository->findAll();
         return $this->render('book/index.html.twig', [
-            'number' => $number,
+            'books' => $books
         ]);
+//        return new Response('Check out this great product: '.$book->getName());
     }
 }
