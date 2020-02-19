@@ -72,4 +72,20 @@ class BookController extends AbstractController
 
         return new Response('Delete book with id '. $id);
     }
+    /**
+     * @Route("/get/{id}", name="get_book")
+     * @param $id
+     * @return Response
+     */
+    public function getAction($id){
+        $entityManager = $this->getDoctrine()->getManager();
+        $book = new Book();
+        $book = $entityManager->getRepository(Book::class)->find($id);
+
+//        $entityManager->remove($book);
+//        $entityManager->flush();
+        $serializer = $this->container->get('serializer');
+        $book = $serializer->serialize($book, 'json');
+        return new Response($book);
+    }
 }

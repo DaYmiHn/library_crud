@@ -365,7 +365,6 @@
                     <div class="form-group">
 
                         <label>ID</label>
-{#                        <input type="number" class="form-control" required>#}
                         <select name="" id="" class="form-control">
                             {% for book in books %}
                                 <option value="{{ book.id }}">{{ book.id }}</option>
@@ -415,6 +414,20 @@
             alert( "Книга удалена ");
         });
     })
+    $('#updateEmployeeModal > div > div > form > div.modal-body > div:nth-child(1) > select').on('change', function() {
+        getBook()
+    });
+    $('body > div.container > div > div > div > div:nth-child(2) > a.btn.btn-primary').click(function () {
+        getBook()
+    })
+    function getBook() {
+        $.ajax({type: "GET", url: "/get/"+$('#updateEmployeeModal > div > div > form > div.modal-body > div:nth-child(1) > select').val()}).done(function( data ) {
+            var obj =jQuery.parseJSON(data);
+            $('#updateEmployeeModal > div > div > form > div.modal-body > div:nth-child(2) > input').val(obj.name);
+            $('#updateEmployeeModal > div > div > form > div.modal-body > div:nth-child(3) > input').val(obj.year);
+            $('#updateEmployeeModal > div > div > form > div.modal-body > div:nth-child(4) > input').val(obj.author) ;
+        });
+    }
 
 </script>
 </body>
