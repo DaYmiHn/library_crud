@@ -17,7 +17,7 @@
 * PHP >= 7.3
 * Mysql
 
-![](https://i.yapx.ru/GZ415.gif)
+![](https://i.imgur.com/yOYPOu1.gif)
 
 ### 1) Установка
 
