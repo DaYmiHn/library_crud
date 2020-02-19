@@ -14,7 +14,8 @@
     <style type="text/css">
         body {
             color: #566787;
-            background: #f5f5f5;
+            /*background: #f5f5f5;*/
+            background: #000000;
             font-family: 'Varela Round', sans-serif;
             font-size: 13px;
         }
@@ -248,7 +249,7 @@
                 <div class="col-sm-6">
                     <a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Добавить</span></a>
                     <a href="#deleteEmployeeModal" class="btn btn-danger" data-toggle="modal"><i class="material-icons">&#xE15C;</i> <span>Удалить</span></a>
-                    <a href="#editEmployeeModal" class="btn btn-primary" data-toggle="modal"><i class="material-icons edit"></i> <span>Изменить</span></a>
+                    <a href="#updateEmployeeModal" class="btn btn-primary" data-toggle="modal"><i class="material-icons edit"></i> <span>Изменить</span></a>
                 </div>
             </div>
         </div>
@@ -312,7 +313,7 @@
     </div>
 </div>
 <!-- Edit Modal HTML -->
-<div id="editEmployeeModal" class="modal fade">
+<div id="updateEmployeeModal" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
             <form>
@@ -323,7 +324,11 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label>ID</label>
-                        <input type="number" class="form-control" required>
+                        <select name="" id="" class="form-control">
+                            {% for book in books %}
+                                <option value="{{ book.id }}">{{ book.id }}</option>
+                            {% endfor %}
+                        </select>
                     </div>
                     <div class="form-group">
                         <label>Название</label>
@@ -358,8 +363,14 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
+
                         <label>ID</label>
-                        <input type="number" class="form-control" required>
+{#                        <input type="number" class="form-control" required>#}
+                        <select name="" id="" class="form-control">
+                            {% for book in books %}
+                                <option value="{{ book.id }}">{{ book.id }}</option>
+                            {% endfor %}
+                        </select>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -383,15 +394,15 @@
             alert( "Книга добавлена: ");
         });
     })
-    $('#editEmployeeModal > div > div > form > div.modal-footer > input.btn.btn-success').click(function () {
+    $('#updateEmployeeModal > div > div > form > div.modal-footer > input.btn.btn-success').click(function () {
         $.ajax({
             type: "GET",
-            url: "/add",
+            url: "/update",
             data: {
-                id: $('#editEmployeeModal > div > div > form > div.modal-body > div:nth-child(1) > input').val(),
-                name: $('#editEmployeeModal > div > div > form > div.modal-body > div:nth-child(2) > input').val(),
-                year: $('#editEmployeeModal > div > div > form > div.modal-body > div:nth-child(3) > input').val(),
-                author: $('#editEmployeeModal > div > div > form > div.modal-body > div:nth-child(4) > input').val() }
+                id: $('#updateEmployeeModal > div > div > form > div.modal-body > div:nth-child(1) > select').val(),
+                name: $('#updateEmployeeModal > div > div > form > div.modal-body > div:nth-child(2) > input').val(),
+                year: $('#updateEmployeeModal > div > div > form > div.modal-body > div:nth-child(3) > input').val(),
+                author: $('#updateEmployeeModal > div > div > form > div.modal-body > div:nth-child(4) > input').val() }
         }).done(function( msg ) {
             alert( "Книга изменена");
         });
@@ -399,7 +410,7 @@
     $('#deleteEmployeeModal > div > div > form > div.modal-footer > input.btn.btn-success').click(function () {
         $.ajax({
             type: "GET",
-            url: "/delete/"+$('#deleteEmployeeModal > div > div > form > div.modal-body > div > input').val()
+            url: "/delete/"+$('#deleteEmployeeModal > div > div > form > div.modal-body > div > select').val()
         }).done(function( msg ) {
             alert( "Книга удалена ");
         });

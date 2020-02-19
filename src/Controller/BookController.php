@@ -66,7 +66,7 @@ class BookController extends AbstractController
         $entityManager = $this->getDoctrine()->getManager();
         $book = new Book();
         $book = $entityManager->getRepository(Book::class)->find($id);
-//        $id = $book->getId();
+
         $entityManager->remove($book);
         $entityManager->flush();
 
