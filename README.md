@@ -1,4 +1,7 @@
 # Задание: Написать web приложение "Библиотека"
+
+![](https://i.imgur.com/gTGZIpj.gif)
+
 Оно должно содержать три страницы:
 * список книг
 * добавление книги
@@ -17,7 +20,7 @@
 * PHP >= 7.3
 * Mysql
 
-![](https://i.imgur.com/gTGZIpj.gif)
+![](https://i.imgur.com/AVAcZyt.png)
 
 ### 1) Установка
 
